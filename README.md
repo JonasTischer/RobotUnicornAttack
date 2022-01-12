@@ -4,12 +4,23 @@ A deep reinforcement learning based bot that masters the flash game Robot Unicor
 https://www.crazygames.com/game/robot-unicorn-attack
 
 
-Requirements
+Download Chromedriver:
 
-install opencv
+<https://chromedriver.chromium.org/downloads> (Make sure you are using the same version as your Chrome)
 
-(Install with conda) https://stackoverflow.com/questions/23119413/how-do-i-install-python-opencv-through-conda
+Unzip downloaded chromedriver
+`unzip chromedriver_mac64.zip`
 
-Install imagegrab (pyscreenshot) for linux https://github.com/ponty/pyscreenshot
+Give it the right permissions
+`xattr -d com.apple.quarantine chromedriver`
 
-Install numpy http://www.numpy.org/
+Move the driver to the /usr/local/bin folder
+`mv chromedriver /usr/local/bin` 
+
+## Getting started
+
+1. Clone this repository
+1. Run `./do venv` to create a python virtual environment
+1. Activate virtual environment by running from project root directory `source venv/bin/activate`
+1. Update your pip via `python -m pip install --upgrade pip`
+1. Run `./do install_requirements` to install all project requirements
