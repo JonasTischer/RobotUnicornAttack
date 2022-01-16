@@ -1,3 +1,8 @@
 .idea
 venv/
 .vscode/
+frames/
+score-frames/
+not-playing-frames/
+state-frames/
+__pycache__

@@ -1,22 +1,29 @@
-from selenium.webdriver import Chrome
+from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from utils.element_has_css_value import element_has_css_value
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class GameController:
 
-    driver = None
     game_canvas = None
 
     def __init__(self) -> None:
-        self.driver = Chrome()
-
+        chrome_options = ChromeOptions()
+        #chrome_options.add_argument('headless')
+        chrome_options.add_argument('window-size=1920x1080')
+        self.driver = Chrome(chrome_options=chrome_options)
+        print("Init Browser")
+        
     def start_browser(self):
         url = "https://www.crazygames.com/game/robot-unicorn-attack"
+        #url = "https://unicorn.jocke.no/"
         self.driver.get(url)
+        print("Open Website")
 
     def expand_shadow_element(self, element):
         # return a list of elements
@@ -39,6 +46,7 @@ class GameController:
         play_now_button.click()
 
         # Press anywhere to start game
+        print("Load Game Canvas")
         WebDriverWait(self.driver, 30).until(
             EC.presence_of_element_located((By.ID, "game-container")))
 
@@ -50,13 +58,19 @@ class GameController:
         game_canvas = WebDriverWait(shadowRoot[2], 10).until(
             element_has_css_value((By.TAG_NAME, "canvas"), "cursor", "pointer"))
         self.game_canvas = game_canvas
+        
         print("Click Canvas")
-        print(game_canvas.location)
-        print(game_canvas.size)
         game_canvas.click()
 
     def shutdown_game(self):
+        print("Shutdown Game")
         self.driver.quit()
 
     def get_game_frame(self):
         return self.game_canvas.screenshot_as_png
+          
+    def input_action(self, action):
+        print("Action: " + str(action))
+        actions = ActionChains(self.driver)
+        actions.send_keys(str(action))
+        actions.perform()
