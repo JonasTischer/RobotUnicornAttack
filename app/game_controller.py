@@ -74,13 +74,7 @@ class GameController:
     def input_action(self, action):
         print("Action: " + str(action))
         actions = ActionChains(self.driver)
-        actions.reset_actions()
-        #actions.click(self.driver.find_element_by_tag_name('body'))
+     
         actions.click(self.driver.find_element_by_tag_name(
             'body')).key_down(str(action)).pause(0.1).key_up(str(action)).perform()
-        #actions.send_keys(str(action))
-        #actions.perform()
- 
-        #self.driver.find_element_by_tag_name('body').send_keys(str(action))
-        
-        print("Performed action: ", str(action))
+
