@@ -22,6 +22,7 @@ import os
 from skimage.util import img_as_uint
 from game_handler import GameHandler
 from game_controller import GameController
+import time
 
 ACTIONS = 3  # number of valid actions
 GAMMA = 0.99  # decay rate of past observations
@@ -31,7 +32,7 @@ FINAL_EPSILON = 0.0001  # final value of epsilon
 INITIAL_EPSILON = 0.1  # starting value of epsilon
 REPLAY_MEMORY = 25000  # number of previous transitions to remember
 BATCH = 64  # size of minibatch
-FRAME_PER_ACTION = 3
+FRAME_PER_ACTION = 1
 LEARNING_RATE = 0.0003
 
 class Model():
@@ -56,9 +57,9 @@ class Model():
         return model
 
     def train(self, model, args):
-
+        last_time = time.time()
         D = deque()
-        frame = self.game_handler.get_frame()
+        frame = self.game_handler.state["frame"]
         stacked_frames = np.stack((frame, frame, frame), axis=2)
         stacked_frames = stacked_frames.reshape(
             1, stacked_frames.shape[0], stacked_frames.shape[1], stacked_frames.shape[2])
@@ -82,7 +83,7 @@ class Model():
         t = 0
         #self.game_handler.play_game()
         while(True):
-            sleep(.1)
+            sleep(0.1)
             if self.game_handler.get_playing() == False:
                 self.game_handler.restart()
                 self.game_handler.get_game_state(t)
@@ -100,7 +101,7 @@ class Model():
                 else:
                     # input a stack of 3 images, get the prediction
                     q = model.predict(stacked_frames)
-                    print(q)
+                    print("q: ", q)
                     max_Q = np.argmax(q)
                     action_index = max_Q
                     a_t[max_Q] = 1
@@ -111,7 +112,9 @@ class Model():
 
             self.game_handler.take_action(action_index)
             self.game_handler.get_game_state(t)
-            frame1 = self.game_handler.get_frame()
+            print('loop took {} seconds'.format(time.time()-last_time))
+            last_time = time.time()
+            frame1 = self.game_handler.state["frame"]
             frame1 = frame1.reshape(1, frame1.shape[0], frame1.shape[1], 1)
             stacked_frames1 = np.append(
                 frame1, stacked_frames[:, :, :, :2], axis=3)

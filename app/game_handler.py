@@ -1,15 +1,15 @@
 from game_controller import GameController
 from utils.image_processor import get_score_from_image, get_state_from_image
 import time
-
+import time
 
 class GameHandler:
 
     game_states = ["Welcome_Screen", "In_Game", "Score_Board"]
     # action_space = { "Dash": "X",
     #                 "Jump": "Z",
-    #                 "Nothing": ""}
-    action_space = ["X", "Z", ""]
+    #                 "Nothing": "X}
+    action_space = ["X", "Z", " "]
 
     def __init__(self, game_controller: GameController):
         self.game_controller = game_controller
@@ -29,6 +29,7 @@ class GameHandler:
     def restart(self):
         print("Not playing, press Z to restart")
         self.take_action(1)
+        time.sleep(1)
 
     def get_reward(self):
         if self.get_playing() == True:

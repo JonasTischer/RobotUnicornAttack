@@ -23,7 +23,7 @@ def get_processed_image(frame, count):
     # edge detection
     processed_img = cv2.Canny(img_gray, threshold1=85, threshold2=255)
     #processed_img = cv2.GaussianBlur(processed_img, (5, 5), 0)
-    cv2.imwrite('./frames/frame-{}.png'.format(count), processed_img)
+    #cv2.imwrite('./frames/frame-{}.png'.format(count), processed_img)
     return processed_img
 
 
@@ -99,6 +99,6 @@ def check_if_playing(image, count):
     if res > 0.8:
         return True
 
-    cv2.imwrite('./not-playing-frames/frame-{}.png'.format(count,
-                                                           ), image)
+    #cv2.imwrite('./not-playing-frames/frame-{}.png'.format(count,
+    #                                              ), image)
     return False

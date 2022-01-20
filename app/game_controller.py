@@ -6,6 +6,7 @@ from utils.element_has_css_value import element_has_css_value
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 
 
 class GameController:
@@ -16,6 +17,7 @@ class GameController:
         chrome_options = ChromeOptions()
         #chrome_options.add_argument('headless')
         chrome_options.add_argument('window-size=1920x1080')
+        chrome_options.add_argument("--mute-audio")
         self.driver = Chrome(chrome_options=chrome_options)
         print("Init Browser")
         
@@ -72,5 +74,13 @@ class GameController:
     def input_action(self, action):
         print("Action: " + str(action))
         actions = ActionChains(self.driver)
-        actions.send_keys(str(action))
-        actions.perform()
+        actions.reset_actions()
+        #actions.click(self.driver.find_element_by_tag_name('body'))
+        actions.click(self.driver.find_element_by_tag_name(
+            'body')).key_down(str(action)).pause(0.1).key_up(str(action)).perform()
+        #actions.send_keys(str(action))
+        #actions.perform()
+ 
+        #self.driver.find_element_by_tag_name('body').send_keys(str(action))
+        
+        print("Performed action: ", str(action))
