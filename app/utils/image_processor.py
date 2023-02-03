@@ -99,6 +99,6 @@ def check_if_playing(image, count):
     if res > 0.8:
         return True
 
-    #cv2.imwrite('./not-playing-frames/frame-{}.png'.format(count,
+    # cv2.imwrite('./not-playing-frames/frame-{}.png'.format(count,
     #                                              ), image)
     return False

@@ -83,7 +83,7 @@ class Model():
         t = 0
         #self.game_handler.play_game()
         while(True):
-            sleep(0.1)
+            sleep(0.05)
             if self.game_handler.get_playing() == False:
                 self.game_handler.restart()
                 self.game_handler.get_game_state(t)

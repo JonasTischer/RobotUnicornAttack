@@ -16,8 +16,17 @@ class GameController:
     def __init__(self) -> None:
         chrome_options = ChromeOptions()
         #chrome_options.add_argument('headless')
-        chrome_options.add_argument('window-size=1920x1080')
+        chrome_options.add_argument('--window-size=1920x1080')
         chrome_options.add_argument("--mute-audio")
+        chrome_options.add_argument("--disable-infobars")
+        chrome_options.add_argument("--disable-notifications")
+        chrome_prefs = {}
+        chrome_options.experimental_options["prefs"] = chrome_prefs
+
+
+        chrome_prefs["profile.default_content_settings"] = {"images": 2}
+        chrome_prefs["profile.managed_default_content_settings"] = {"images": 2}
+        chrome_options.add_argument("--no-sandbox")
         self.driver = Chrome(chrome_options=chrome_options)
         print("Init Browser")
         
